@@ -1,0 +1,40 @@
+<!--Navegacion con barra lateral-->
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false"
+    style="background-color: rgba(0, 0, 0, 0.57); width: 250px;">
+
+    <mat-toolbar>
+      <img src="./assets/cabecera.png" style="width: 90%; height: 100px;  margin-top: 3rem;" />
+    </mat-toolbar>
+    <div>
+<!---Opciones lista de navegacion-->
+      <mat-nav-list>
+        <a mat-list-item href="#" class="lista">INICIO</a>
+        <a mat-list-item href="#" class="lista">GESTION RESERVAS</a>
+        <a mat-list-item href="#" class="lista">GESTION ESCENARIOS</a>
+        <a mat-list-item href="#" class="lista">REPORTES</a>
+
+      </mat-nav-list>
+    </div>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar style="background-color: #ffcc00">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+
+
+      </button>
+
+      <span>Prestamos Escenarios Deportivos</span>
+      <div>
+        <span style="margin-left: 900px;">Administrador</span>
+      </div>
+      <mat-icon aria-label="cerrar sesion" fontIcon="logout" style="width: 100% ; margin-left: 40px;">salir</mat-icon>
+
+    </mat-toolbar>
+    <!-- Add Content Here -->
+  </mat-sidenav-content>
+</mat-sidenav-container>
