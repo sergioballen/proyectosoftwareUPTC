@@ -5,27 +5,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Users")
 public class User {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id")
-    private int Id;
+
     private int userCode;
     private String name;
-    @Enumerated(EnumType.STRING)
-    private Schools school;
+
+    private String school;
     private String email;
     private String password;
 
     public User() {
     }
 
-    public int getId() {
-        return Id;
-    }
 
-    public void setId(int id) {
-        Id = id;
-    }
 
     public int getUserCode() {
         return userCode;
@@ -43,11 +36,11 @@ public class User {
         this.name = name;
     }
 
-    public Schools getSchool() {
+    public String getSchool() {
         return school;
     }
 
-    public void setSchool(Schools school) {
+    public void setSchool(String school) {
         this.school = school;
     }
 
