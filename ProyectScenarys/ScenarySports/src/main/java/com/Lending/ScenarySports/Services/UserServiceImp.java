@@ -13,26 +13,29 @@ import java.util.Optional;
 @Service
 public class UserServiceImp implements UserService{
 
-    @Autowired   // inyecta el scenaryRepository
+    @Autowired   // inyecta el userRepository
     private UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
     public Iterable<User> findAll() {
+
         return userRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<User> findAll(Pageable pageable) {
+
         return userRepository.findAll(pageable);
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public Optional<User> findById(int userCode) {
+    public Optional<User> findByCode(int userCode) {
         return userRepository.findById(userCode);
     }
+
+
 
 
 

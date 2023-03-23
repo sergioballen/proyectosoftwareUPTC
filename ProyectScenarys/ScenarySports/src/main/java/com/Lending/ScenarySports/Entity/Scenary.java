@@ -3,7 +3,6 @@ package com.Lending.ScenarySports.Entity;
 
 import jakarta.persistence.*;
 
-
 @Entity
 @Table(name = "Scenarys")
 public class Scenary {

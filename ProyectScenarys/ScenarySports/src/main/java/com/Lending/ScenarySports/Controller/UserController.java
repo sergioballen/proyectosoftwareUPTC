@@ -5,7 +5,6 @@ package com.Lending.ScenarySports.Controller;
 import com.Lending.ScenarySports.Entity.User;
 import com.Lending.ScenarySports.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +23,15 @@ public class UserController {
 
     //leer un usuario
     @GetMapping("/{userCode}")  //obtiene el id
-    public ResponseEntity<User> read(@PathVariable int userCode){
+    public ResponseEntity<User> read(@PathVariable int userCode) {
 
         //si el id no existe devuelve el codigo 404
-        Optional<User> optional_User = userService.findById(userCode);
+        Optional<User> optional_User = userService.findByCode(userCode);
         if (optional_User.isPresent()) {
             // si el id existe lo devuelve
-            return ResponseEntity.ok(optional_User.get()) ;
+            return ResponseEntity.ok(optional_User.get());
 
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
 
@@ -40,9 +39,9 @@ public class UserController {
 
     //Leer todos
     @GetMapping
-    public List<User> readAll(){
+    public List<User> readAll() {
 
-        List<User> users = StreamSupport.stream(userService.findAll().spliterator(),false).
+        List<User> users = StreamSupport.stream(userService.findAll().spliterator(), false).
                 collect(Collectors.toList());
         return users;
     }

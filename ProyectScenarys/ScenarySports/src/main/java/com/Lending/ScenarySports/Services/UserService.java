@@ -3,7 +3,9 @@ package com.Lending.ScenarySports.Services;
 import com.Lending.ScenarySports.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -11,6 +13,7 @@ public interface UserService {
 
     public Page<User> findAll(Pageable pageable); //implementa la paginación, devueleve un objeto
 
-    public Optional<User> findById(int userCode);  //devuelve usuarios  por id
+    public Optional<User> findByCode(int userCode);  //devuelve usuarios  por id
+
 
 }

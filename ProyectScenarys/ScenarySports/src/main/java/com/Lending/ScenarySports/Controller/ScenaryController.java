@@ -29,7 +29,7 @@ public class ScenaryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(scenaryService.save(scenary));
 
     }
-    //leer un usuario
+    //leer un Escenario
     @GetMapping("/{id}")  //obtiene el id
     public ResponseEntity<Scenary> read(@PathVariable int id){
 
