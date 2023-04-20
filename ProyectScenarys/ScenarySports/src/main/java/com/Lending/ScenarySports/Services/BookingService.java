@@ -4,7 +4,6 @@ import com.Lending.ScenarySports.Entity.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Book;
 import java.util.Optional;
 
 public interface BookingService {
@@ -15,7 +14,7 @@ public interface BookingService {
     public Optional<Booking> findById(int id);  //devuelve Reservas  por id
 
 
-    public Booking save(Booking booking); //guarda una resrva que pasemos
+    public Booking save(Booking booking); //guarda una reserva que pasemos
 
     public void deleteById(int id);  //elimina una reserva por id
 

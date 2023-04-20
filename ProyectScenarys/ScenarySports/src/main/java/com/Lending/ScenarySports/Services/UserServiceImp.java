@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class UserServiceImp implements UserService{
@@ -35,9 +36,10 @@ public class UserServiceImp implements UserService{
         return userRepository.findById(userCode);
     }
 
-
-
-
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
 
 
 }

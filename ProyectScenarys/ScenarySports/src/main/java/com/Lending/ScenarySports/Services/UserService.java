@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserService {
@@ -16,4 +17,5 @@ public interface UserService {
     public Optional<User> findByCode(int userCode);  //devuelve usuarios  por id
 
 
+    public List<User> getUsers();
 }

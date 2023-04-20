@@ -18,18 +18,21 @@ public class BookingServiceImp implements BookingService{
     @Override
     @Transactional(readOnly = true)
     public Iterable<Booking> findAll() {
+
         return bookingRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<Booking> findAll(Pageable pageable) {
+
         return bookingRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Booking> findById(int id) {
+
         return bookingRepository.findById(id);
     }
 

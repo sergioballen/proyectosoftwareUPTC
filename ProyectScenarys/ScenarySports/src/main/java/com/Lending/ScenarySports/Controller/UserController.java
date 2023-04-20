@@ -5,20 +5,68 @@ package com.Lending.ScenarySports.Controller;
 import com.Lending.ScenarySports.Entity.User;
 import com.Lending.ScenarySports.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/api/Users")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    //crear nuevo escenario
+    @PostMapping ("/login")
+    public ResponseEntity<Object> loginUser(@RequestBody Map<String, String> credentials) {
+
+        String userEmail = credentials.get("userEmail");
+        String userPassword = credentials.get("userPassword");
+        User user = null;
+        Map<String, Object> response = new HashMap();
+
+
+
+        for (int i = 0; i < userService.getUsers().size(); i++) {
+
+            if (userEmail.equals(userService.getUsers().get(i).getEmail())) {
+                user = userService.getUsers().get(i);
+            }
+        }
+
+        if (user != null) {
+            if (!userPassword.equals(user.getPassword())){
+                response.put("route", "");
+                response.put("user", null);
+                response.put("error", "Contraseña incorrecta");
+                return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+
+            }
+        }
+
+        if(user.getEmail() !="adminDeportes@uptc.edu.co") {
+            //response.put("error", "datos correctos");
+
+        }
+
+        else {
+
+
+            response.put("route", "");
+        }
+        response.put("user", user);
+        response.put("OK", "Datos correctos");
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+    }
 
 
     //leer un usuario
