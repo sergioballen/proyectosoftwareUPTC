@@ -4,6 +4,7 @@ import com.Lending.ScenarySports.Entity.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface BookingService {
@@ -17,5 +18,5 @@ public interface BookingService {
     public Booking save(Booking booking); //guarda una reserva que pasemos
 
     public void deleteById(int id);  //elimina una reserva por id
-
+    public List<Booking> finAll();
 }

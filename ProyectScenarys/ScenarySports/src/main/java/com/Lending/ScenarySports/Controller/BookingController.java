@@ -1,14 +1,20 @@
 package com.Lending.ScenarySports.Controller;
 
 import com.Lending.ScenarySports.Entity.Booking;
+import com.Lending.ScenarySports.Entity.User;
 import com.Lending.ScenarySports.Services.BookingService;
+import com.Lending.ScenarySports.Services.ReportService;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.catalina.filters.ExpiresFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -82,6 +88,32 @@ public class BookingController {
         List<Booking> bookings = StreamSupport.stream(bookingService.findAll().spliterator(),false).
                 collect(Collectors.toList());
         return bookings;
+    }
+
+    @PostMapping("/exportExcel")
+    public void exportBookings(HttpServletResponse response) throws IOException {
+
+
+        DateFormat dateFormat =new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String Date_start =dateFormat.format(new Date());
+        String Date_end =dateFormat.format(new Date());
+        User user = null;
+       // Map<String, Object> response = new HashMap();
+
+
+        response.setContentType("application/octet-stream");
+
+        String dateActual =dateFormat.format(new Date());
+
+        String head= "Content-Disposition";
+        String value="attachment; filename=Booking_"+dateActual+ ".xlsx";
+
+        response.setHeader(head,value);
+
+        List<Booking> bookings = bookingService.finAll();
+        ReportService exporter = new ReportService(bookings);
+        exporter.Export(response);
+
     }
 
 }
