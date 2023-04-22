@@ -13,6 +13,6 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking,Integer> {
        List<Booking> findByDateAndHour(LocalDate date, LocalTime hour);
 
-        //Booking findByDate(LocalDate fec);
+       List<Booking> findByDate(LocalDate date);
         //Booking findByHour(LocalTime hour);
 }

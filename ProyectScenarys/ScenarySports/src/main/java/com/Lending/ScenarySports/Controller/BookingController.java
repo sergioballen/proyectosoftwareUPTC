@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,28 +45,22 @@ public class BookingController {
 
       //  Booking dateExist = bookingRepository.findByDate(booking.getDate());
         //Booking hourExist = bookingRepository.findByHour(booking.getHora());
-        List<Booking> existingBookings = bookingRepository.findByDateAndHour(booking.getDate(),booking.getHora());
+        //List<Booking> existingBookings = bookingRepository.findByDateAndHour(booking.getDate(),booking.getHora());
+        List<Booking> existingBookings = bookingRepository.findByDate(booking.getDate());
+        for (Booking existingBooking : existingBookings) {
+            LocalDateTime existingDateTime = LocalDateTime.of(existingBooking.getDate(), existingBooking.getHora());
+            LocalDateTime newDateTime = LocalDateTime.of(booking.getDate(), booking.getHora());
 
-        if (!existingBookings.isEmpty()){
-            System.out.println("ya existe");
-
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("Ya existe una reserva para la fecha y hora especificadas");
-
-
-              }else {
-
-            //System.out.println("fecha"+booking.getDate()+" ingresa"+dateExist);
-           //System.out.println("hora"+booking.getHora()+" ingresa"+hourExist);
-            System.out.println("La producto agregado existe");
-            Booking savedBooking = bookingService.save(booking);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
-
-
-           // return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.save(booking));
+            if (existingDateTime.minusHours(2).isBefore(newDateTime) && existingDateTime.plusHours(2).isAfter(newDateTime)) {
+                return ResponseEntity.status(HttpStatus.CONFLICT)
+                        .body("Ya existe una reserva para la fecha y hora especificadas, además debe haber una diferencia de 2 horas entre reservas");
+            }
         }
 
-       // return ResponseEntity.notFound().build();
+        Booking savedBooking = bookingService.save(booking);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
+
+
     }
 
     //leer un Reserva
