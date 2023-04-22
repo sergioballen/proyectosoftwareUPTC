@@ -65,9 +65,7 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
 
-
-    }
-
+  }
 
     //leer un usuario
     @GetMapping("/{userCode}")  //obtiene el id

@@ -2,18 +2,26 @@ package com.Lending.ScenarySports.Controller;
 
 import com.Lending.ScenarySports.Entity.Booking;
 import com.Lending.ScenarySports.Entity.User;
+import com.Lending.ScenarySports.Repository.BookingRepository;
 import com.Lending.ScenarySports.Services.BookingService;
 import com.Lending.ScenarySports.Services.ReportService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.filters.ExpiresFilter;
+import org.aspectj.bridge.IMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.swing.plaf.synth.SynthFormattedTextFieldUI;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,9 +29,11 @@ import java.util.stream.StreamSupport;
 @RestController
 @RequestMapping("/api/Bookings")
 public class BookingController {
-
+    @Autowired
+    private BookingRepository bookingRepository;
     @Autowired
     private BookingService bookingService;
+
 
     //crear nueva Reserva
 
@@ -32,8 +42,30 @@ public class BookingController {
 
     public ResponseEntity<?> create(@RequestBody Booking booking)	{
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.save(booking));
+      //  Booking dateExist = bookingRepository.findByDate(booking.getDate());
+        //Booking hourExist = bookingRepository.findByHour(booking.getHora());
+        List<Booking> existingBookings = bookingRepository.findByDateAndHour(booking.getDate(),booking.getHora());
 
+        if (!existingBookings.isEmpty()){
+            System.out.println("ya existe");
+
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Ya existe una reserva para la fecha y hora especificadas");
+
+
+              }else {
+
+            //System.out.println("fecha"+booking.getDate()+" ingresa"+dateExist);
+           //System.out.println("hora"+booking.getHora()+" ingresa"+hourExist);
+            System.out.println("La producto agregado existe");
+            Booking savedBooking = bookingService.save(booking);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedBooking);
+
+
+           // return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.save(booking));
+        }
+
+       // return ResponseEntity.notFound().build();
     }
 
     //leer un Reserva
@@ -90,6 +122,8 @@ public class BookingController {
         return bookings;
     }
 
+
+
     @PostMapping("/exportExcel")
     public void exportBookings(HttpServletResponse response) throws IOException {
 
@@ -98,7 +132,7 @@ public class BookingController {
         String Date_start =dateFormat.format(new Date());
         String Date_end =dateFormat.format(new Date());
         User user = null;
-       // Map<String, Object> response = new HashMap();
+        // Map<String, Object> response = new HashMap();
 
 
         response.setContentType("application/octet-stream");

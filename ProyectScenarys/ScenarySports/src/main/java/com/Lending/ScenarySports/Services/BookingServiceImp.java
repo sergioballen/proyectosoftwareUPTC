@@ -54,5 +54,10 @@ public class BookingServiceImp implements BookingService{
         return bookingRepository.findAll();
     }
 
+    @Override
+    public List<Booking> getBookings() {
+        return bookingRepository.findAll();
+    }
+
 
 }

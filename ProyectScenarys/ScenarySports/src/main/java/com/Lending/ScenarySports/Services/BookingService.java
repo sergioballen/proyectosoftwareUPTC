@@ -1,6 +1,7 @@
 package com.Lending.ScenarySports.Services;
 
 import com.Lending.ScenarySports.Entity.Booking;
+import com.Lending.ScenarySports.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +20,6 @@ public interface BookingService {
 
     public void deleteById(int id);  //elimina una reserva por id
     public List<Booking> finAll();
+
+    public List<Booking> getBookings();
 }
