@@ -5,6 +5,7 @@ import com.Lending.ScenarySports.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,7 @@ public interface BookingService {
     public List<Booking> finAll();
 
     public List<Booking> getBookings();
+
+    List<Booking> findByDateBetween(LocalDate startDate, LocalDate endDate);
+    public List<Booking> findByUserId(int userCode);
 }
