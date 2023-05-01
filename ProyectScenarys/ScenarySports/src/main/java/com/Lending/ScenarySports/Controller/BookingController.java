@@ -31,6 +31,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/Bookings")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookingController {
     @Autowired
     private BookingRepository bookingRepository;
@@ -42,7 +43,7 @@ public class BookingController {
 
     //crear nueva Reserva
 
-    @PostMapping
+    @PostMapping("/Booking")
     //devuelve un respuesta que sera la entidad
 
     public ResponseEntity<?> create(@RequestBody Booking booking)	{
@@ -104,7 +105,7 @@ public class BookingController {
     }
 
     //leer un Reserva
-    @GetMapping("/{id}")  //obtiene el id
+    @GetMapping("/Booking/{id}")  //obtiene el id
     public ResponseEntity<Booking> read(@PathVariable int id){
 
         //si el id no existe devuelve el codigo 404
@@ -120,7 +121,7 @@ public class BookingController {
 
     }
     //modificar  Reserva
-    @PutMapping("/{id}")
+    @PutMapping("/Booking/{id}")
     public ResponseEntity<?> update (@RequestBody Booking booking, @PathVariable int id){
 
         Optional<Booking> Booking= bookingService.findById(id);
@@ -170,7 +171,7 @@ public class BookingController {
     }
 
     //borrar reserva
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/Booking/{id}")
     public ResponseEntity<?> delete (@PathVariable int id){
 
         if (!bookingService.findById(id).isPresent()) {
@@ -181,7 +182,7 @@ public class BookingController {
         return ResponseEntity.ok().build();
     }
     //Leer todos
-    @GetMapping
+    @GetMapping("/Booking")
     public List<Booking> readAll(){
 
         List<Booking> bookings = StreamSupport.stream(bookingService.findAll().spliterator(),false).
@@ -191,7 +192,7 @@ public class BookingController {
 
 
 
-    @PostMapping("/exportExcel")
+    @PostMapping("/Booking/exportExcel")
     public void exportBookings(@RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start,
                                @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end,
                                HttpServletResponse response) throws IOException {

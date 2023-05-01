@@ -1,5 +1,6 @@
 package com.Lending.ScenarySports.Services;
 
+import com.Lending.ScenarySports.Entity.Booking;
 import com.Lending.ScenarySports.Entity.Scenary;
 import com.Lending.ScenarySports.Repository.ScenaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class ScenaryServiceImpl implements ScenaryService {
@@ -36,12 +38,18 @@ public class ScenaryServiceImpl implements ScenaryService {
     @Override
     @Transactional
     public Scenary save(Scenary scenary) {
+
         return scenaryRepository.save(scenary);
     }
 
     @Override
     @Transactional
     public void deleteById(int id) {
+
         scenaryRepository.deleteById(id);
     }
+
+
+
+
 }
