@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/Users")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://uptcescenarios.netlify.app")
 public class UserController {
     @Autowired
     private UserService userService;

@@ -31,7 +31,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/Bookings")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://uptcescenarios.netlify.app")
 public class BookingController {
     @Autowired
     private BookingRepository bookingRepository;
@@ -172,7 +172,7 @@ public class BookingController {
 
     //borrar reserva
     @DeleteMapping("/Booking/{id}")
-    public ResponseEntity<?> delete (@PathVariable int id){
+    public ResponseEntity<?> deleteB (@PathVariable int id){
 
         if (!bookingService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
